@@ -52,7 +52,7 @@ jobs:
           ./configure --target-device=unknown
           echo "=== Fixing Makefile for cross-compile ==="
           sed -i 's/-fstrict-flex-arrays=3//g' Makefile
-          sed -i 's/-Werror//g' Makefile
+          sed -i 's/ -Werror[^ ]*//g' Makefile
           sed -i 's/^CFLAGS = /CFLAGS = -D_GNU_SOURCE /' Makefile
           grep CFLAGS Makefile | head -5
 
