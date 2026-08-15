@@ -50,6 +50,9 @@ jobs:
           export PKG_CONFIG_PATH=/usr/lib/aarch64-linux-gnu/pkgconfig
           export PKG_CONFIG_LIBDIR=/usr/lib/aarch64-linux-gnu/pkgconfig
           ./configure --target-device=unknown
+          echo "=== Removing incompatible -fstrict-flex-arrays=3 from Makefile ==="
+          sed -i 's/-fstrict-flex-arrays=3//g' Makefile
+          grep CFLAGS Makefile | head -5
 
       - name: Build Gmu
         run: |
@@ -57,7 +60,7 @@ jobs:
           export CC=aarch64-linux-gnu-gcc
           export CXX=aarch64-linux-gnu-g++
           export PKG_CONFIG_PATH=/usr/lib/aarch64-linux-gnu/pkgconfig
-          make -j$(nproc) CFLAGS="-O2 -Wall"
+          make -j$(nproc)
           echo "=== Build output ==="
           ls -lh gmu.bin frontends/sdl.so
           file gmu.bin
