@@ -53,8 +53,9 @@ jobs:
           echo "=== Fixing Makefile for cross-compile ==="
           sed -i 's/-fstrict-flex-arrays=3//g' Makefile
           sed -i 's/ -Werror[^ ]*//g' Makefile
-          sed -i 's/^CFLAGS = /CFLAGS = -D_GNU_SOURCE /' Makefile
-          grep CFLAGS Makefile | head -5
+          sed -i 's/-DSDLFE_WITHOUT_SDL_TTF=1/-DSDLFE_WITHOUT_SDL_TTF=0/g' Makefile
+          sed -i '1i CFLAGS+=-D_GNU_SOURCE' Makefile
+          grep CFLAGS Makefile | head -10
 
       - name: Build Gmu
         run: |
